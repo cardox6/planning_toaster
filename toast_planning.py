@@ -126,11 +126,11 @@ def plan(start_state):
     visited = set()
 
     while toVisit:
-        # Sort queue to prioritize states with lower time
+        # Sort queue to prioritize states with lower cost
         toVisit.sort(key=lambda x: x[0])
-        current_time, plan, state = toVisit.pop(0)
-        # time of current state. Asign variable to avoid warning
-        _ = current_time
+        current_cost, plan, state = toVisit.pop(0)
+        # Asign variable to avoid warning
+        _ = current_cost
 
         state_key = tuple(state.items())
         if state_key in visited:
@@ -143,8 +143,8 @@ def plan(start_state):
         for action in actions:
             new_plan = plan + [action]
             new_state = state_transition(state, action)
-            new_time = new_state["time"]
-            toVisit.append((new_time, new_plan, new_state))
+            new_cost = new_state["time"]
+            toVisit.append((new_cost, new_plan, new_state))
             
     return None
 
