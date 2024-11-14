@@ -159,7 +159,22 @@ test({'toaster_has_power': True, 'toaster_is_on': True, 'bread_location': 'plate
 test({'toaster_has_power': False, 'toaster_is_on': True, 'bread_location': 'plate', 'bread_state': 'untoasted', 'time': 0})
 
 # Results of the test & runtime:
+
+# found sequence: ['plug_in_toaster', 'put_in_bread', 'switch_on_toaster', 'wait', 'take_out_bread']
+#         runtime: 0.0037226139684207737 seconds
+#         fulfills goal? True
+#         in world time 14
+
+# found sequence: ['switch_on_toaster', 'wait', 'take_out_bread']
+#         runtime: 0.0035226669861003757 seconds
+#         fulfills goal? True
+#         in world time 12
+
 # found sequence: ['unplug_toaster', 'plug_in_toaster', 'put_in_bread', 'switch_on_toaster', 'wait', 'take_out_bread']
-#         runtime: 0.006323854031506926 seconds
+#         runtime: 0.0035461070365272462 seconds
+#         fulfills goal? True
+#         in world time 15
+#         found sequence: ['unplug_toaster', 'plug_in_toaster', 'put_in_bread', 'switch_on_toaster', 'wait', 'take_out_bread']
+#         runtime: 0.004829837998840958 seconds
 #         fulfills goal? True
 #         in world time 15
