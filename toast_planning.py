@@ -105,12 +105,19 @@ def plan(start_state):
     toVisit = [([],start_state)]
 
     while len(toVisit) > 0:
-        plan, state = toVisit.pop(0)
+        current_time, plan, state = toVisit.pop(0)
+        # time of current state. Asign variable to avoid warning
+        _ = current_time
+
         if goal(state) == True:
             return plan
+        
         for action in actions:
-            new_state = (plan + [action], state_transition(state, action))
-            toVisit = toVisit + [new_state]
+            new_plan = plan + [action]
+            new_state = state_transition(state, action)
+            new_time = new_state["time"]
+            toVisit.append((new_time, new_plan, new_state))
+            
     return None
 
 def wrapper(start_state):
@@ -144,8 +151,3 @@ test({'toaster_has_power': True, 'toaster_is_on': True, 'bread_location': 'plate
 test({'toaster_has_power': False, 'toaster_is_on': True, 'bread_location': 'plate', 'bread_state': 'untoasted', 'time': 0})
 
 # Results of the test & runtime:
-#         found sequence: ['plug_in_toaster', 'wait', 'put_in_bread', 'switch_on_toaster', 'wait', 'take_out_bread']
-#         runtime: 37.35231491702143 seconds
-#         plate
-#         fulfills goal? True
-#         in world time 24
