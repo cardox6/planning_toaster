@@ -143,7 +143,7 @@ def plan(start_state):
         for action in actions:
             new_plan = plan + [action]
             new_state = state_transition(state, action)
-            new_cost = new_state["time"]
+            new_cost = new_state["time"] + heuristic(new_state)
             toVisit.append((new_cost, new_plan, new_state))
             
     return None
