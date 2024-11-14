@@ -103,13 +103,19 @@ def state_transition(state, action):
 def plan(start_state):
     # initialize a state queue
     toVisit = [(0, [],start_state)]
+    visited = set()
 
-    while len(toVisit) > 0:
+    while toVisit:
         # Sort queue to prioritize states with lower time
         toVisit.sort(key=lambda x: x[0])
         current_time, plan, state = toVisit.pop(0)
         # time of current state. Asign variable to avoid warning
         _ = current_time
+
+        state_key = tuple(state.items())
+        if state_key in visited:
+            continue
+        visited.add(state_key)
 
         if goal(state) == True:
             return plan
