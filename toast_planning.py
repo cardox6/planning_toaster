@@ -100,18 +100,54 @@ def state_transition(state, action):
 # 2) Implement a function that also optimizes the final value of the parameter "time"
 # 3) Implement a function that fulfills 2) and is as fast as possible!
 ###################################################
+
+def heuristic(state):
+    # Best case, If the bread is toasted and on the plate, then no need to do anything as no additional time is needed
+    if state["bread_location"] == "plate" and state["bread_state"] == "toasted":
+        return 0 # no time needed
+    
+    # If the bread is in the toaster and it is on, then the estimated wait time is 10 seconds
+    if state["bread_location"] == "toaster" and state["toaster_is_on"]:
+        return 10 # wait
+    
+    # If the bread is on the plate and toaster has Power.
+    if state["bread_location"] == "plate" and state["toaster_has_power"]:
+        return 1 + 1 + 10 # put_in_bread, switch_on_toaster, wait
+    
+    # If the bread is on the plate and the toaster has No Power.
+    if state["bread_location"] == "plate" and not state["toaster_has_power"]:
+        return 1 + 1 + 1 + 10 # plug_in_toaster, put_in_bread, switch_on_toaster, wait
+    # Cost of heuristic.
+    return 1
+
 def plan(start_state):
     # initialize a state queue
-    toVisit = [([],start_state)]
+    toVisit = [(0, [],start_state)]
+    visited = set()
 
-    while len(toVisit) > 0:
-        plan, state = toVisit.pop(0)
+    while toVisit:
+        # Sort queue to prioritize states with lower time
+        toVisit.sort(key=lambda x: x[0])
+        current_time, plan, state = toVisit.pop(0)
+        # time of current state. Asign variable to avoid warning
+        _ = current_time
+
+        state_key = tuple(state.items())
+        if state_key in visited:
+            continue
+        visited.add(state_key)
+
         if goal(state) == True:
             return plan
+        
         for action in actions:
-            new_state = (plan + [action], state_transition(state, action))
-            toVisit = toVisit + [new_state]
+            new_plan = plan + [action]
+            new_state = state_transition(state, action)
+            new_time = new_state["time"]
+            toVisit.append((new_time, new_plan, new_state))
+            
     return None
+
 
 def wrapper(start_state):
     return plan(start_state)
@@ -144,8 +180,3 @@ test({'toaster_has_power': True, 'toaster_is_on': True, 'bread_location': 'plate
 test({'toaster_has_power': False, 'toaster_is_on': True, 'bread_location': 'plate', 'bread_state': 'untoasted', 'time': 0})
 
 # Results of the test & runtime:
-#         found sequence: ['plug_in_toaster', 'wait', 'put_in_bread', 'switch_on_toaster', 'wait', 'take_out_bread']
-#         runtime: 37.35231491702143 seconds
-#         plate
-#         fulfills goal? True
-#         in world time 24
