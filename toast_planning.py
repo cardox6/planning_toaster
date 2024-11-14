@@ -109,8 +109,9 @@ def plan(start_state):
         if goal(state) == True:
             return plan
         for action in actions:
-            new_state = (plan + [action], state_transition(state, action))
-            toVisit = toVisit + [new_state]
+            new_plan = plan + [action]
+            new_state = state_transition(state, action)
+            toVisit.append((new_plan, new_state))
     return None
 
 def wrapper(start_state):
@@ -145,7 +146,7 @@ test({'toaster_has_power': False, 'toaster_is_on': True, 'bread_location': 'plat
 
 # Results of the test & runtime:
 #         found sequence: ['plug_in_toaster', 'wait', 'put_in_bread', 'switch_on_toaster', 'wait', 'take_out_bread']
-#         runtime: 37.35231491702143 seconds
+#         runtime: 0.26055681001162156 seconds
 #         plate
 #         fulfills goal? True
 #         in world time 24
