@@ -102,9 +102,11 @@ def state_transition(state, action):
 ###################################################
 def plan(start_state):
     # initialize a state queue
-    toVisit = [([],start_state)]
+    toVisit = [(0, [],start_state)]
 
     while len(toVisit) > 0:
+        # Sort queue to prioritize states with lower time
+        toVisit.sort(key=lambda x: x[0])
         current_time, plan, state = toVisit.pop(0)
         # time of current state. Asign variable to avoid warning
         _ = current_time
