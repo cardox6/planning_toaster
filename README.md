@@ -9,7 +9,15 @@ The task comes in multiple difficulties:
 - (Medium) Implement breadth first search (you may refer to the pseudo code).
 - (Hard) find the plan that toasts bread the fastest by finding a solution where parameter "time" is minimal.
 - (Very-Hard) Solve the hard task with an algorithm that needs as little run time as possible.
+___
+## Test Results
 
+| Algorithm | Test Case 1 | Test Case 2 | Test Case 3 | Test Case 4 |
+|---|---|---|---|---|
+| A* Search | 0.0012s, 14 steps | 0.0007s, 12 steps | 0.0014s, 15 steps | 0.0014s, 15 steps |
+| BFS Time Optimized | 0.0040s, 14 steps | 0.0031s, 12 steps | 0.0036s, 15 steps | 0.0051s, 15 steps |
+| BFS Optimized | 0.0182s, 14 steps | 0.0011s, 12 steps | 0.1314s, 23 steps | 0.2664s, 24 steps |
+| BFS Pseudo Code | 0.3067s, 14 steps | 0.0034s, 12 steps | 7.2191s, 23 steps | 42.2890s, 24 steps |
 
 ## A* Search with Heuristic
 
